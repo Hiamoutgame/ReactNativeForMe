@@ -1,11 +1,11 @@
 {
   "expo": {
-    "name": "reactforme",
-    "slug": "reactforme",
+    "name": "Asm1_TodoList",
+    "slug": "asm1-todolist",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "reactforme",
+    "scheme": "asm1-todolist",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
