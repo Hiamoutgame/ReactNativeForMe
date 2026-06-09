@@ -1,6 +1,7 @@
-export type Todo = {
+﻿export type Todo = {
   id: string;
   title: string;
+  detail?: string; // Add detail based on the design
   completed: boolean;
   createdAt: number;
 };
@@ -8,23 +9,21 @@ export type Todo = {
 export const TODO_STORAGE_KEY = "Asm1_SE193308_TodoList";
 
 export const todoPalette = {
-  ink: "#24211D",
-  muted: "#756F66",
-  paper: "#FBF7EF",
-  panel: "#FFFFFF",
-  line: "#E6DDD0",
-  primary: "#2F5D50",
-  primarySoft: "#DDEBE5",
-  accent: "#D9863D",
-  accentSoft: "#F8E4D2",
-  danger: "#C6534B",
-  dangerSoft: "#F7DDDA",
-  success: "#4F8A5F",
-  successSoft: "#E1EFDF",
+  primary: "#9395D3",
+  backgroundLight: "#D6D7EF",
+  backgroundWhite: "#FFFFFF",
+  textDark: "#000000",
+  textLight: "#8A8A8A",
+  white: "#FFFFFF",
+  
+  ink: "#000000",
+  muted: "#8A8A8A",
+  paper: "#FFFFFF",
+  line: "#D9D9D9",
 };
 
 export const todoRadius = {
   sm: 8,
-  md: 14,
-  lg: 22,
+  md: 12,
+  lg: 28,
 };

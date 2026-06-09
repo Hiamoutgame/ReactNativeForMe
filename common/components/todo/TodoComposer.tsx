@@ -3,8 +3,7 @@ import {
   Pressable,
   StyleSheet,
   Text,
-  TextInput,
-  View,
+  View
 } from "react-native";
 
 import { todoPalette, todoRadius } from "@/constants/todo";
@@ -25,21 +24,26 @@ export function TodoComposer({
   onCancelEdit,
 }: TodoComposerProps) {
   return (
+
     <View style={styles.container}>
-      <View style={styles.inputShell}>
-        <Ionicons name="create-outline" size={20} color={todoPalette.muted} />
-        <TextInput
-          value={value}
-          onChangeText={onChangeText}
-          placeholder={
-            isEditing ? "Update your task..." : "Write a new task..."
-          }
-          placeholderTextColor={todoPalette.muted}
-          returnKeyType="done"
-          style={styles.input}
-          onSubmitEditing={onSubmit}
+      <Pressable
+        accessibilityRole="button"
+        style={({ pressed }) => [
+          styles.submitButton,
+          isEditing && styles.editButton,
+          pressed && styles.pressed,
+        ]}
+        onPress={onSubmit}
+      >
+        <Ionicons
+          name={isEditing ? "checkmark" : "add"}
+          size={20}
+          color="#4F252E"
         />
-      </View>
+        <Text style={styles.submitText}>{isEditing ? "Edit" : "Add"}</Text>
+      </Pressable>
+
+
 
       <View style={styles.actions}>
         {isEditing ? (
@@ -56,22 +60,6 @@ export function TodoComposer({
           </Pressable>
         ) : null}
 
-        <Pressable
-          accessibilityRole="button"
-          style={({ pressed }) => [
-            styles.submitButton,
-            isEditing && styles.editButton,
-            pressed && styles.pressed,
-          ]}
-          onPress={onSubmit}
-        >
-          <Ionicons
-            name={isEditing ? "checkmark" : "add"}
-            size={20}
-            color="#FFFFFF"
-          />
-          <Text style={styles.submitText}>{isEditing ? "Edit" : "Add"}</Text>
-        </Pressable>
       </View>
     </View>
   );
@@ -128,7 +116,7 @@ const styles = StyleSheet.create({
     backgroundColor: todoPalette.dangerSoft,
   },
   submitText: {
-    color: "#FFFFFF",
+    color: "#4F252E",
     fontSize: 15,
     fontWeight: "800",
   },

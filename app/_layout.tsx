@@ -1,4 +1,4 @@
-import { Stack } from "expo-router";
+﻿import { Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 
@@ -10,19 +10,22 @@ export default function RootLayout() {
   return (
     <SafeAreaProvider>
       <GluestackUIProvider mode="light">
-        <StatusBar style="dark" />
+        <StatusBar style="light" />
         <Stack
           screenOptions={{
             headerShadowVisible: false,
-            headerStyle: { backgroundColor: todoPalette.paper },
-            headerTintColor: todoPalette.ink,
+            headerStyle: { backgroundColor: todoPalette.primary },
+            headerTintColor: todoPalette.white,
             headerTitleStyle: {
-              fontSize: 15,
-              fontWeight: "900",
+              fontSize: 20,
+              fontWeight: "bold",
             },
+            contentStyle: { backgroundColor: todoPalette.backgroundWhite },
           }}
         >
-          <Stack.Screen name="index" options={{ title: "Asm1 SE193308 TodoList" }} />
+          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+          <Stack.Screen name="add" options={{ title: "Add Task" }} />
+          <Stack.Screen name="edit/[id]" options={{ title: "Edit Task" }} />
         </Stack>
       </GluestackUIProvider>
     </SafeAreaProvider>

@@ -1,4 +1,4 @@
-import { Ionicons } from "@expo/vector-icons";
+﻿import { Ionicons } from "@expo/vector-icons";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 
 import { Todo, todoPalette, todoRadius } from "@/constants/todo";
@@ -14,142 +14,114 @@ export function TodoItem({ todo, onToggle, onEdit, onDelete }: TodoItemProps) {
   return (
     <Pressable
       accessibilityRole="button"
-      style={({ pressed }) => [
-        styles.card,
-        todo.completed && styles.completedCard,
-        pressed && styles.pressed,
-      ]}
+      style={({ pressed }) => [styles.pressable, pressed && styles.pressed]}
       onPress={() => onToggle(todo.id)}
     >
-      <View
-        style={[styles.checkbox, todo.completed && styles.checkedCheckbox]}
-      >
-        {todo.completed ? (
-          <Ionicons name="checkmark" size={16} color="#FFFFFF" />
-        ) : null}
-      </View>
+      <View style={styles.card}>
+        <View style={styles.content}>
+          <Text
+            numberOfLines={1}
+            style={[styles.title, todo.completed && styles.completedTitle]}
+          >
+            {todo.title}
+          </Text>
+          {todo.detail ? (
+             <Text numberOfLines={1} style={styles.detail}>
+               {todo.detail}
+             </Text>
+          ) : null}
+        </View>
 
-      <View style={styles.content}>
-        <Text
-          numberOfLines={2}
-          style={[styles.title, todo.completed && styles.completedTitle]}
-        >
-          {todo.title}
-        </Text>
-        <Text style={styles.meta}>
-          {todo.completed ? "Completed" : "Tap to complete"}
-        </Text>
-      </View>
+        {/* Hành động ở bên phải */}
+        <View style={styles.actions}>
+          <Pressable
+            hitSlop={8}
+            onPress={(event) => {
+              event.stopPropagation();
+              onEdit(todo);
+            }}
+          >
+            <Ionicons name="pencil-outline" size={20} color={todoPalette.primary} />
+          </Pressable>
 
-      <View style={styles.actions}>
-        <Pressable
-          accessibilityRole="button"
-          style={({ pressed }) => [
-            styles.iconButton,
-            styles.editButton,
-            pressed && styles.actionPressed,
-          ]}
-          onPress={(event) => {
-            event.stopPropagation();
-            onEdit(todo);
-          }}
-        >
-          <Ionicons name="pencil" size={17} color={todoPalette.accent} />
-        </Pressable>
-
-        <Pressable
-          accessibilityRole="button"
-          style={({ pressed }) => [
-            styles.iconButton,
-            styles.deleteButton,
-            pressed && styles.actionPressed,
-          ]}
-          onPress={(event) => {
-            event.stopPropagation();
-            onDelete(todo.id);
-          }}
-        >
-          <Ionicons name="trash-outline" size={17} color={todoPalette.danger} />
-        </Pressable>
+          <Pressable
+            hitSlop={8}
+            onPress={(event) => {
+              event.stopPropagation();
+              onDelete(todo.id);
+            }}
+          >
+            <Ionicons
+              name="trash-outline"
+              size={20}
+              color={todoPalette.primary}
+            />
+          </Pressable>
+          
+          <Pressable
+            hitSlop={8}
+            onPress={(event) => {
+              event.stopPropagation();
+              onToggle(todo.id);
+            }}
+          >
+            <Ionicons
+              name={todo.completed ? "checkmark-circle" : "checkmark-circle-outline"}
+              size={22}
+              color={todoPalette.primary}
+            />
+          </Pressable>
+        </View>
       </View>
     </Pressable>
   );
 }
 
 const styles = StyleSheet.create({
+  pressable: {
+    borderRadius: todoRadius.md,
+    backgroundColor: todoPalette.backgroundWhite,
+    elevation: 2,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.1,
+    shadowRadius: 2,
+  },
   card: {
-    minHeight: 82,
+    minHeight: 70,
     alignItems: "center",
     flexDirection: "row",
     gap: 12,
-    borderWidth: 1,
-    borderColor: todoPalette.line,
     borderRadius: todoRadius.md,
-    backgroundColor: todoPalette.panel,
-    padding: 14,
-    elevation: 2,
-  },
-  completedCard: {
-    backgroundColor: todoPalette.successSoft,
-    borderColor: "#C7DEC3",
-  },
-  checkbox: {
-    width: 28,
-    height: 28,
-    alignItems: "center",
-    justifyContent: "center",
-    borderWidth: 2,
-    borderColor: todoPalette.line,
-    borderRadius: 14,
-    backgroundColor: todoPalette.panel,
-  },
-  checkedCheckbox: {
-    borderColor: todoPalette.success,
-    backgroundColor: todoPalette.success,
+    padding: 16,
   },
   content: {
     flex: 1,
     minWidth: 0,
     gap: 4,
+    justifyContent: "center",
   },
   title: {
-    color: todoPalette.ink,
+    color: todoPalette.primary, // Design màu tím cho title
     fontSize: 16,
-    fontWeight: "800",
-    lineHeight: 21,
+    fontWeight: "bold",
+    textTransform: "uppercase",
   },
   completedTitle: {
-    color: todoPalette.muted,
+    color: todoPalette.textLight,
     textDecorationLine: "line-through",
   },
-  meta: {
-    color: todoPalette.muted,
-    fontSize: 12,
-    fontWeight: "700",
-    textTransform: "uppercase",
+  detail: {
+    color: todoPalette.textLight, // Xám nhạt
+    fontSize: 13,
   },
   actions: {
     flexDirection: "row",
-    gap: 8,
-  },
-  iconButton: {
-    width: 36,
-    height: 36,
     alignItems: "center",
-    justifyContent: "center",
-    borderRadius: todoRadius.sm,
-  },
-  editButton: {
-    backgroundColor: todoPalette.accentSoft,
-  },
-  deleteButton: {
-    backgroundColor: todoPalette.dangerSoft,
+    gap: 12,
   },
   pressed: {
     opacity: 0.9,
     transform: [{ scale: 0.99 }],
-  },
-  actionPressed: {
-    opacity: 0.74,
   },
 });

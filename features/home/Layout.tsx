@@ -1,4 +1,4 @@
-import React from "react";
+﻿import React from "react";
 import { KeyboardAvoidingView, Platform, StyleSheet, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
@@ -10,7 +10,7 @@ type Props = {
 
 export default function Layout({ children }: Props) {
   return (
-    <SafeAreaView edges={["top", "left", "right"]} style={styles.safeArea}>
+    <SafeAreaView edges={["left", "right"]} style={styles.safeArea}>
       <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : undefined}
         style={styles.keyboardView}
@@ -24,14 +24,13 @@ export default function Layout({ children }: Props) {
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
-    backgroundColor: todoPalette.paper,
+    backgroundColor: todoPalette.backgroundLight,
   },
   keyboardView: {
     flex: 1,
   },
   container: {
     flex: 1,
-    backgroundColor: todoPalette.paper,
-    paddingHorizontal: 18,
+    backgroundColor: todoPalette.backgroundLight,
   },
 });

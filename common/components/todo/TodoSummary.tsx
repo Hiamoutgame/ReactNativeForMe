@@ -1,4 +1,3 @@
-import { Ionicons } from "@expo/vector-icons";
 import { StyleSheet, Text, View } from "react-native";
 
 import { todoPalette, todoRadius } from "@/constants/todo";
@@ -14,22 +13,12 @@ export function TodoSummary({
   completedCount,
   remainingCount,
 }: TodoSummaryProps) {
-  const progressLabel =
-    totalCount === 0
-      ? "0%"
-      : `${Math.round((completedCount / totalCount) * 100)}%`;
-
   return (
     <View style={styles.card}>
       <View style={styles.headerRow}>
         <View>
           <Text style={styles.eyebrow}>Assignment 1</Text>
           <Text style={styles.title}>Todo List</Text>
-        </View>
-
-        <View style={styles.badge}>
-          <Ionicons name="sparkles-outline" size={16} color={todoPalette.ink} />
-          <Text style={styles.badgeText}>{progressLabel}</Text>
         </View>
       </View>
 

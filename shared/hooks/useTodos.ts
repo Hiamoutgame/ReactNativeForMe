@@ -1,4 +1,5 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useFocusEffect } from "expo-router";
 import { useCallback, useEffect, useMemo, useState } from "react";
 
 import { Todo, TODO_STORAGE_KEY } from "@/constants/todo";
@@ -19,36 +20,34 @@ export function useTodos(): UseTodosResult {
   const [isLoading, setIsLoading] = useState(true);
   const [hasHydrated, setHasHydrated] = useState(false); // hasHydrated is used to prevent overwriting loaded todos when they are being set for the first time. After the first load, it will be set to true and allow saving to Async Storage on every change.
 
-  useEffect(() => {
-    let isMounted = true;
-
-    async function loadTodos() {
-      try {
-        const storedValue = await AsyncStorage.getItem(TODO_STORAGE_KEY);
-        if (!isMounted || !storedValue) {
-          return;
-        }
-
-        const parsedTodos = JSON.parse(storedValue) as Todo[];
-        if (Array.isArray(parsedTodos)) {
-          setTodos(parsedTodos);
-        }
-      } catch (error) {
-        console.warn("Can not load todos from Async Storage", error);
-      } finally {
-        if (isMounted) {
-          setIsLoading(false);
-          setHasHydrated(true);
-        }
+  const loadTodos = useCallback(async () => {
+    try {
+      const storedValue = await AsyncStorage.getItem(TODO_STORAGE_KEY);
+      if (!storedValue) {
+        return;
       }
+
+      const parsedTodos = JSON.parse(storedValue) as Todo[];
+      if (Array.isArray(parsedTodos)) {
+        setTodos(parsedTodos);
+      }
+    } catch (error) {
+      console.warn("Can not load todos from Async Storage", error);
+    } finally {
+      setIsLoading(false);
+      setHasHydrated(true);
     }
-
-    loadTodos();
-
-    return () => {
-      isMounted = false;
-    };
   }, []);
+
+  useEffect(() => {
+    loadTodos();
+  }, [loadTodos]);
+
+  useFocusEffect(
+    useCallback(() => {
+      loadTodos();
+    }, [loadTodos]),
+  );
 
   useEffect(() => {
     if (!hasHydrated) {
